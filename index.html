@@ -10,7 +10,72 @@
 
 </head>
 <body>
+<h1>
+  Library
+</h1>
+
+<div class="main__container">
+  <div class="main__buttons-container">
+
+<div class="filtering-container">
+    <input type="text" placeholder="type name or author">
+</div>
+
+<button id="addBookButton">
+  ADD A BOOK
+</button>
+<button id="addBookButton">
+  Remove selected
+</button>
+
+  </div>
+  <div class="main__table-container">
+    <table id="table">
+
+    </table>
+
+  </div>
+
+
+</div>
+
+<div class="popup-wrapper hidden" id="popup">
+
+  <div class="popup">
+    <form name="popupForm">
+      <div class="rows">
+          <div class="row">
+              <input type="text" placeholder="Book Name" name="name">
+              <input type="text" placeholder="Book Author" name="author">
+              <input type="text" placeholder="Book Publisher" name="publisher">
+              <input type="text" placeholder="Book Quantity" name="quantity">
+          </div>
+          
+          <div class="row">
+              <input type="text" placeholder="Book Price" name="price">
+              <input type="text" placeholder="Book Pages Count" name="pagesCount">
+              <input type="text" placeholder="Book Publishing Year" name="publishingYear">
+          </div>
+
+      </div>
+
+
+      <div class="buttons-group">
+          <button type="button">Cancel</button>
+          <button type="submit">Confirm</button>
+      </div>
+
+
+    </form>
+    
+
+  </div>
+
+</div>
+
+
 
   <script src="./dist/main.js"></script>
 </body>
 </html>
+

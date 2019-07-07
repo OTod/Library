@@ -37,14 +37,8 @@ class Library {
         let book = this.books.find((item) => {
             return item.id === id
         });
-        console.log(book);
-        console.log(updateInfo);
         let updatedBook = {...book, ...updateInfo };
         this.books[this.books.indexOf(book)] = updatedBook;
-        console.log('book edited: \n', updatedBook);
-
-        console.log(this.getBooks());
-
     }
 
     removeBook(book) {

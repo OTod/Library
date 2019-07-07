@@ -1,6 +1,5 @@
 class LibraryAPI {
   constructor(basicRoute){
-
     this.baseURL = basicRoute;
   }
 
@@ -25,16 +24,16 @@ class LibraryAPI {
       let xhr = new XMLHttpRequest();
       xhr.open(method,this.baseURL+route, true);
       xhr.onload = () => {
-        if(this.status >= 200 || this.status >= 300 ) {
-          resolve(xhr.response); 
+        if(xhr.status >= 200 && xhr.status < 300 ) {
+          resolve(JSON.parse(xhr.response)); 
         } else {
           reject(xhr.response);
         }
       }
-      xhr.onerror = () => {
-        reject(xhr.response);
+      xhr.onerror = (e) => {
+        reject(e);
       }
-      data ? xhr.send(data) : xhr.send();
+      data ? xhr.send(JSON.stringify(data)) : xhr.send();
     })
   }
 }

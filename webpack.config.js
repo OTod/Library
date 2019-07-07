@@ -1,6 +1,7 @@
 const files = [
   'main.js',
   'booksApi.js',
+  'table.js',
   'script-3.js',
 
 ]

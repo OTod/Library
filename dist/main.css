@@ -1,0 +1,57 @@
+/* resetting styles */
+body {
+  margin: 0;
+  padding: 0;
+}
+/* popup styles */
+
+.shown {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+.popup-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  
+  background: rgba(0,0,0,0.5);
+
+}
+
+.popup {
+  max-width: 50%;
+  padding: 20px;
+  border: 2 px solid black;
+  background-color: white;
+  box-shadow: 2px 2px black;
+
+  display: flex;
+}
+
+.popup form {
+  height: 100%;
+}
+
+.rows {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.row {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons-group {
+  display: flex;
+  justify-content: flex-end;
+}

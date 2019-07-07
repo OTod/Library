@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("class LibraryAPI {\r\n  constructor(basicRoute){\r\n\r\n    this.baseURL = basicRoute;\r\n  }\r\n\r\n  fetchBooks(){\r\n    return this.makeRequest('GET','');\r\n  }\r\n\r\n  editBook(id,editedBook){\r\n    return this.makeRequest('PATCH', `/${id}`, editedBook);\r\n  }\r\n\r\n  deleteBook(id){\r\n    return this.makeRequest('DELETE', `/${id}`);\r\n  }\r\n\r\n  addBook(newBook){\r\n    return this.makeRequest('POST', '', newBook);\r\n  }\r\n\r\n  makeRequest(method, route, data ){\r\n    return new Promise((resolve, reject) => {\r\n      let xhr = new XMLHttpRequest();\r\n      xhr.open(method,this.baseURL+route, true);\r\n      // xhr.setRequestHeader() // ! Here should be CORS policy header \r\n      // xhr.setRequestHeader('Access-Control-Allow-Origin','null');\r\n      // xhr.setRequestHeader('Access-Control-Allow-Credentials','true');\r\n      xhr.onload = () => {\r\n        if(this.status >= 200 || this.status >= 300 ) {\r\n          resolve(xhr.response); \r\n        } else {\r\n          reject(xhr.response);\r\n        }\r\n      }\r\n      xhr.onerror = () => {\r\n        reject(xhr.response);\r\n      }\r\n      data ? xhr.send(data) : xhr.send();\r\n    })\r\n  }\r\n}\r\n\r\nmodule.exports = new LibraryAPI('http://localhost:4200/library');\n\n//# sourceURL=webpack:///./src/booksApi.js?");
+eval("class LibraryAPI {\r\n  constructor(basicRoute){\r\n    this.baseURL = basicRoute;\r\n  }\r\n\r\n  fetchBooks(){\r\n    return this.makeRequest('GET','');\r\n  }\r\n\r\n  editBook(id,editedBook){\r\n    return this.makeRequest('PATCH', `/${id}`, editedBook);\r\n  }\r\n\r\n  deleteBook(id){\r\n    return this.makeRequest('DELETE', `/${id}`);\r\n  }\r\n\r\n  addBook(newBook){\r\n    return this.makeRequest('POST', '', newBook);\r\n  }\r\n\r\n  makeRequest(method, route, data ){\r\n    return new Promise((resolve, reject) => {\r\n      let xhr = new XMLHttpRequest();\r\n      xhr.open(method,this.baseURL+route, true);\r\n      xhr.onload = () => {\r\n        if(xhr.status >= 200 && xhr.status < 300 ) {\r\n          resolve(JSON.parse(xhr.response)); \r\n        } else {\r\n          reject(xhr.response);\r\n        }\r\n      }\r\n      xhr.onerror = (e) => {\r\n        reject(e);\r\n      }\r\n      data ? xhr.send(JSON.stringify(data)) : xhr.send();\r\n    })\r\n  }\r\n}\r\n\r\nmodule.exports = new LibraryAPI('http://localhost:4200/library');\n\n//# sourceURL=webpack:///./src/booksApi.js?");
 
 /***/ }),
 
@@ -104,7 +104,18 @@ eval("class LibraryAPI {\r\n  constructor(basicRoute){\r\n\r\n    this.baseURL =
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("console.log('document is ready');\r\n\r\nconst api = __webpack_require__(/*! ./booksApi */ \"./src/booksApi.js\");\r\n\r\napi.fetchBooks().then(\r\n  (books)=>{\r\n    console.log(books);\r\n  },\r\n  (error)=>{\r\n    console.log(error);\r\n  })\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("console.log('document is ready');\r\n\r\nconst api = __webpack_require__(/*! ./booksApi */ \"./src/booksApi.js\");\r\nconst tableApi = __webpack_require__(/*! ./table */ \"./src/table.js\");\r\nconst popup = __webpack_require__(/*! ./popup */ \"./src/popup.js\");\r\n\r\n\r\n\r\n// event handlers adding\r\n\r\nconst $addBookButton = document.getElementById('addBookButton');\r\n$addBookButton.addEventListener('click',onAddBook);\r\n\r\n\r\napi.fetchBooks().then(\r\n  (books)=>{\r\n    tableApi.data = books;\r\n    tableApi.buildTable();\r\n  },\r\n  (error)=>{\r\n    alert('sorry, an error occurerd', error);\r\n  })\r\n\r\n  function onAddBook(e){\r\n    console.log('book adding!!',e);\r\n    popup.open();\r\n  }\n\n//# sourceURL=webpack:///./src/main.js?");
+
+/***/ }),
+
+/***/ "./src/popup.js":
+/*!**********************!*\
+  !*** ./src/popup.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("class Popup {\r\n  constructor(){\r\n    this.$popup = document.getElementById('popup');\r\n  }\r\n\r\n  open(){\r\n    this.$popup.classList.replace('hidden','shown');\r\n  }\r\n\r\n  close(){\r\n    this.$popup.classList.replace('shown', 'hidden');\r\n  }\r\n}\r\n\r\nmodule.exports = new Popup();\n\n//# sourceURL=webpack:///./src/popup.js?");
 
 /***/ }),
 
@@ -119,14 +130,25 @@ eval("console.log('document 3 is ready');\n\n//# sourceURL=webpack:///./src/scri
 
 /***/ }),
 
+/***/ "./src/table.js":
+/*!**********************!*\
+  !*** ./src/table.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("class Table {\r\n  constructor(data = [], tableColumsData){\r\n    this.tableData = data;\r\n\r\n    this.tableColumnsOrderArray = tableColumsData || {\r\n      checkbox: null,\r\n      price: 'Price',\r\n      name: 'Name',\r\n      author: 'Author',\r\n      publisher: 'Publishing House',\r\n      quantity: 'Quantity',\r\n      pagesCount: 'Pages Count',\r\n      publishingYear: 'Publishing Year',\r\n      editButton: null\r\n    }\r\n  }\r\n\r\n  set data(data){\r\n    this.tableData = data;\r\n  }\r\n\r\n  sortData(parameter){\r\n// ! not implemented yet\r\n  }\r\n\r\n  filterData(parameter){\r\n// ! not implemented yet\r\n  }\r\n\r\n  buildTable(){\r\n\r\n    let $table = document.getElementById('table');\r\n    let $headerRow = document.createElement('tr');\r\n    for( let columnName in this.tableColumnsOrderArray){\r\n      let $header = document.createElement('th');\r\n      $header.innerText = this.tableColumnsOrderArray[columnName]\r\n      $headerRow.appendChild($header);\r\n    }\r\n    $table.appendChild($headerRow);\r\n\r\n    this.tableData.forEach(element => {\r\n      let $row = document.createElement('tr');\r\n      $row.setAttribute('bookId',element.id);\r\n      $row.classList.add('table-row');\r\n      for(let columnName in this.tableColumnsOrderArray) {\r\n        let $cell = document.createElement('td');\r\n        switch (columnName) {\r\n          case 'checkbox': \r\n            let $checkbox = document.createElement('input');\r\n            $checkbox.setAttribute('type', 'checkbox');\r\n            $checkbox.setAttribute('bookId',element.id);\r\n            $cell.appendChild($checkbox);\r\n            break;\r\n          case 'editButton': \r\n            let $editButton = document.createElement('button');\r\n            $editButton.setAttribute('id', 'editButton');\r\n            $editButton.innerText = 'Edit';\r\n            $cell.appendChild($editButton);\r\n            break;\r\n          default: $cell.innerText = element[columnName];\r\n        }\r\n\r\n        $cell.classList.add('table-cell');\r\n        $row.appendChild($cell);\r\n      } \r\n\r\n      $table.appendChild($row);     \r\n    });\r\n\r\n  }\r\n}\r\n\r\nmodule.exports = new Table();\n\n//# sourceURL=webpack:///./src/table.js?");
+
+/***/ }),
+
 /***/ 0:
-/*!***************************************************************!*\
-  !*** multi ./src/main.js ./src/booksApi.js ./src/script-3.js ***!
-  \***************************************************************/
+/*!******************************************************************************!*\
+  !*** multi ./src/main.js ./src/booksApi.js ./src/table.js ./src/script-3.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/main.js */\"./src/main.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/booksApi.js */\"./src/booksApi.js\");\nmodule.exports = __webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/script-3.js */\"./src/script-3.js\");\n\n\n//# sourceURL=webpack:///multi_./src/main.js_./src/booksApi.js_./src/script-3.js?");
+eval("__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/main.js */\"./src/main.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/booksApi.js */\"./src/booksApi.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/table.js */\"./src/table.js\");\nmodule.exports = __webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/script-3.js */\"./src/script-3.js\");\n\n\n//# sourceURL=webpack:///multi_./src/main.js_./src/booksApi.js_./src/table.js_./src/script-3.js?");
 
 /***/ })
 
