@@ -3,7 +3,9 @@ const Table = require('./table');
 const popup = require('./popup');
 const formController = require('./formController');
 
-const tableApi = new Table(null,null,null, onEditBook); // ! too many args
+const tableApi = new Table(null,null,onCheckboxClick, onEditBook); // ! too many args
+
+var selectedRows = [];
 
 // event handlers adding
 
@@ -93,5 +95,31 @@ function onEditFormSubmit(id){
 
 function onPopupClose(){
   popup.close();
+}
+
+function onCheckboxClick(e){
+  const id = e.target.attributes.bookId.value
+
+  let itemIndex = selectedRows.findIndex(rowId => {
+    return rowId === id;
+  })
+  console.log(itemIndex);
+  console.log(selectedRows);
+  if(itemIndex >= 0){
+    console.log('found one');
+    selectedRows.splice(itemIndex,1);
+  } else {
+    selectedRows.push(id);
+  }
+  console.log(selectedRows);
+  const $removeButton = document.getElementById('removeSelectedBooks');
+  if(selectedRows.length > 0){
+    $removeButton.removeAttribute('disabled');
+    $removeButton.innerText = `Remove ${selectedRows.length} items`;
+  } else {
+    $removeButton.innerText = 'Remove selected';
+    $removeButton.setAttribute('disabled', 'true');
+  }
+
 }
 
