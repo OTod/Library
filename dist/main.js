@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("class LibraryAPI {\r\n  constructor(basicRoute){\r\n    this.baseURL = basicRoute;\r\n  }\r\n\r\n  fetchBooks(){\r\n    return this.makeRequest('GET','');\r\n  }\r\n\r\n  editBook(id,editedBook){\r\n    return this.makeRequest('PATCH', `/${id}`, editedBook);\r\n  }\r\n\r\n  deleteBook(id){\r\n    return this.makeRequest('DELETE', `/${id}`);\r\n  }\r\n\r\n  addBook(newBook){\r\n    return this.makeRequest('POST', '', newBook);\r\n  }\r\n\r\n  makeRequest(method, route, data ){\r\n    console.log(JSON.stringify(data));\r\n    return new Promise((resolve, reject) => {\r\n      let xhr = new XMLHttpRequest();\r\n      xhr.open(method,this.baseURL+route, true);\r\n      if(method === 'POST' || method === 'PATCH'){\r\n        xhr.setRequestHeader('Content-Type','application/json');\r\n\r\n      }\r\n      xhr.onload = () => {\r\n        if(xhr.status >= 200 && xhr.status < 300 ) {\r\n          resolve(JSON.parse(xhr.response)); \r\n        } else {\r\n          reject(xhr.response);\r\n        }\r\n      }\r\n      xhr.onerror = (e) => {\r\n        reject(e);\r\n      }\r\n      data ? xhr.send(JSON.stringify(data)) : xhr.send();\r\n    })\r\n  }\r\n}\r\n\r\nmodule.exports = new LibraryAPI('http://localhost:4200/library');\n\n//# sourceURL=webpack:///./src/booksApi.js?");
+eval("class LibraryAPI {\r\n  constructor(basicRoute){\r\n    this.baseURL = basicRoute;\r\n  }\r\n\r\n  fetchBooks(){\r\n    return this.makeRequest('GET','');\r\n  }\r\n\r\n  getBook(id){\r\n    return this.makeRequest('GET', `/${id}`);\r\n  }\r\n\r\n  editBook(id,editedBook){\r\n    return this.makeRequest('PUT', `/${id}`, editedBook);\r\n  }\r\n\r\n  deleteBook(id){\r\n    return this.makeRequest('DELETE', `/${id}`);\r\n  }\r\n\r\n  addBook(newBook){\r\n    return this.makeRequest('POST', '', newBook);\r\n  }\r\n\r\n  makeRequest(method, route, data ){\r\n    console.log(JSON.stringify(data));\r\n    return new Promise((resolve, reject) => {\r\n      let xhr = new XMLHttpRequest();\r\n      xhr.open(method,this.baseURL+route, true);\r\n      if(method === 'POST' || method === 'PUT'){\r\n        xhr.setRequestHeader('Content-Type','application/json');\r\n\r\n      }\r\n      xhr.onload = () => {\r\n        if(xhr.status >= 200 && xhr.status < 300 ) {\r\n          resolve(JSON.parse(xhr.response)); \r\n        } else {\r\n          reject(xhr.response);\r\n        }\r\n      }\r\n      xhr.onerror = (e) => {\r\n        reject(e);\r\n      }\r\n      data ? xhr.send(JSON.stringify(data)) : xhr.send();\r\n    })\r\n  }\r\n}\r\n\r\nmodule.exports = new LibraryAPI('http://localhost:4200/library');\n\n//# sourceURL=webpack:///./src/booksApi.js?");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ eval("class LibraryAPI {\r\n  constructor(basicRoute){\r\n    this.baseURL = bas
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("function getFormValues(){\r\n    const { elements } = document.forms[0];\r\n    const formData = {};\r\n    for(let n = 0; n< elements.length; n ++ ){\r\n      let element = elements[n];\r\n      if(element.tagName === 'INPUT'){\r\n        formData[element.name] = element.value;\r\n      }\r\n    }\r\n  \r\n    return formData;\r\n}\r\n\r\nfunction populateForm(){\r\n\r\n}\r\n\r\n\r\nmodule.exports = { getFormValues, populateForm }\n\n//# sourceURL=webpack:///./src/formController.js?");
+eval("function getFormValues(){\r\n    const { elements } = document.forms[0];\r\n    const formData = {};\r\n    for(let n = 0; n< elements.length; n ++ ){\r\n      let element = elements[n];\r\n      if(element.tagName === 'INPUT'){\r\n        formData[element.name] = element.value;\r\n      }\r\n    }\r\n    console.log(formData);\r\n    return formData;\r\n}\r\n\r\nfunction populateForm(book){\r\n  for(let field in book){\r\n    let $element = document.getElementById(field);\r\n    if($element){\r\n      $element.value = book[field];\r\n    }\r\n  }\r\n\r\n}\r\n\r\n\r\nmodule.exports = { getFormValues, populateForm }\n\n//# sourceURL=webpack:///./src/formController.js?");
 
 /***/ }),
 
@@ -115,7 +115,7 @@ eval("function getFormValues(){\r\n    const { elements } = document.forms[0];\r
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const api = __webpack_require__(/*! ./booksApi */ \"./src/booksApi.js\");\r\nconst Table = __webpack_require__(/*! ./table */ \"./src/table.js\");\r\nconst popup = __webpack_require__(/*! ./popup */ \"./src/popup.js\");\r\nconst formController = __webpack_require__(/*! ./formController */ \"./src/formController.js\");\r\n\r\nconst tableApi = new Table(null,null,null, onEditBook); // ! too many args\r\n\r\n// event handlers adding\r\n\r\nconst $addBookButton = document.getElementById('addBookButton');\r\n$addBookButton.addEventListener('click',onAddBook);\r\n\r\nconst $form = document.getElementById('form');\r\n$form.onsubmit = onFormSubmit;\r\n\r\nconst $cancelFormButton = document.getElementById('cancelButton');\r\n$cancelFormButton.addEventListener('click',onPopupClose);\r\n\r\n//////////////////////////////////////////////////////\r\nfunction init(){\r\n  api.fetchBooks().then(\r\n    (books)=>{\r\n      tableApi.data = books;\r\n      tableApi.buildTable();\r\n    },\r\n    (error)=>{\r\n      alert('sorry, an error occurerd', error); // !change to displayed message instead a table\r\n    })\r\n}\r\ninit();\r\n\r\n\r\n\r\nfunction onFormSubmit(event){\r\n  event.preventDefault();\r\n  popup.onConfirm();\r\n  \r\n}\r\n\r\nfunction onAddBook(e){\r\n  popup.setOnConfirm(onAddFormSubmit)\r\n  popup.open();\r\n}\r\n\r\n // ! maybe this callback should be \r\nfunction onAddFormSubmit(){\r\n  console.log('another submit!!');\r\n  api.addBook(formController.getFormValues()).then(\r\n    (res)=>{\r\n      popup.close();\r\n      init();\r\n    }, \r\n    (err)=>{\r\n      alert('some error occured!', err);\r\n      popup.close();\r\n    })\r\n}\r\n\r\n\r\nfunction onEditBook(e){\r\n  console.log(e.target.attributes.bookId.value);\r\n  popup.setOnConfirm(onEditFormSubmit)\r\n  popup.open();\r\n}\r\n\r\nfunction onEditFormSubmit(){\r\n  console.log('another edit submit!!');\r\n}\r\n\r\nfunction onPopupClose(){\r\n  popup.close();\r\n}\r\n\r\n\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("const api = __webpack_require__(/*! ./booksApi */ \"./src/booksApi.js\");\r\nconst Table = __webpack_require__(/*! ./table */ \"./src/table.js\");\r\nconst popup = __webpack_require__(/*! ./popup */ \"./src/popup.js\");\r\nconst formController = __webpack_require__(/*! ./formController */ \"./src/formController.js\");\r\n\r\nconst tableApi = new Table(null,null,null, onEditBook); // ! too many args\r\n\r\n// event handlers adding\r\n\r\nconst $addBookButton = document.getElementById('addBookButton');\r\n$addBookButton.addEventListener('click',onAddBook);\r\n\r\nconst $form = document.getElementById('form');\r\n$form.onsubmit = onFormSubmit;\r\n\r\nconst $cancelFormButton = document.getElementById('cancelButton');\r\n$cancelFormButton.addEventListener('click',onPopupClose);\r\n\r\n//////////////////////////////////////////////////////\r\nfunction init(){\r\n  api.fetchBooks().then(\r\n    (books)=>{\r\n      tableApi.data = books;\r\n      tableApi.buildTable();\r\n    },\r\n    (error)=>{\r\n      alert('sorry, an error occurerd', error); // !change to displayed message instead a table\r\n    })\r\n}\r\ninit();\r\n\r\n\r\nfunction onFormSubmit(event){\r\n  event.preventDefault();\r\n  popup.onConfirm();\r\n  \r\n}\r\n\r\nfunction onAddBook(e){\r\n  popup.setOnConfirmCallback(onAddFormSubmit)\r\n  popup.open();\r\n}\r\n\r\nfunction onAddFormSubmit(){\r\n  api.addBook(formController.getFormValues()).then(\r\n    (res)=>{\r\n      popup.close();\r\n      init();\r\n    }, \r\n    (err)=>{\r\n      alert('some error occured!', err);\r\n      popup.close();\r\n    })\r\n}\r\n\r\n\r\nfunction onEditBook(e){\r\n  const id = e.target.attributes.bookId.value;\r\n\r\n  $publisherInput = document.getElementById('publisher').setAttribute('disabled','true');\r\n  $publisherInput = document.getElementById('quantity').setAttribute('disabled','true');\r\n\r\n  api.getBook(id).then(\r\n    (res)=>{\r\n      console.log(res);\r\n      popup.setOnConfirmCallback(onEditFormSubmit(id));\r\n      formController.populateForm(res);\r\n      popup.open();\r\n    }, \r\n    (err)=>{\r\n      alert('Sorry, error occured. Please try again later', err);\r\n      popup.close();\r\n    })\r\n}\r\n\r\nfunction onEditFormSubmit(id){\r\n\r\n  return function(){\r\n    console.log('another edit submit!!');\r\n    api.editBook(id, formController.getFormValues()).then(\r\n      (res)=>{\r\n        console.log(res);\r\n        init();\r\n        popup.close();\r\n      },\r\n      (err)=>{\r\n        alert('some error occured, please try again later');\r\n        popup.close();\r\n      })\r\n  }\r\n\r\n}\r\n\r\nfunction onPopupClose(){\r\n  popup.close();\r\n}\r\n\r\n\n\n//# sourceURL=webpack:///./src/main.js?");
 
 /***/ }),
 
@@ -126,7 +126,7 @@ eval("const api = __webpack_require__(/*! ./booksApi */ \"./src/booksApi.js\");\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("class Popup {\r\n  constructor(){\r\n    this.onConfirm = function(){\r\n      throw('No confirmation function provided');\r\n    }\r\n    this.$popup = document.getElementById('popup');\r\n  }\r\n\r\n  open(){\r\n    this.$popup.classList.replace('hidden','shown');\r\n  }\r\n\r\n  close(){\r\n    this.$popup.classList.replace('shown', 'hidden');\r\n    document.forms[0].reset();\r\n  }\r\n\r\n  setOnConfirm(func){\r\n    this.onConfirm = func;\r\n  }\r\n\r\n}\r\n\r\nmodule.exports = new Popup();\n\n//# sourceURL=webpack:///./src/popup.js?");
+eval("class Popup {\r\n  constructor(){\r\n    this.onConfirm = function(){\r\n      throw('No confirmation function provided');\r\n    }\r\n    this.$popup = document.getElementById('popup');\r\n  }\r\n\r\n  open(){\r\n    this.$popup.classList.replace('hidden','shown');\r\n  }\r\n\r\n  close(){\r\n    this.$popup.classList.replace('shown', 'hidden');\r\n    document.forms[0].reset();\r\n  }\r\n\r\n  setOnConfirmCallback(func){\r\n    this.onConfirm = func;\r\n  }\r\n\r\n}\r\n\r\nmodule.exports = new Popup();\n\n//# sourceURL=webpack:///./src/popup.js?");
 
 /***/ }),
 
@@ -138,6 +138,17 @@ eval("class Popup {\r\n  constructor(){\r\n    this.onConfirm = function(){\r\n 
 /***/ (function(module, exports) {
 
 eval("console.log('document 3 is ready');\n\n//# sourceURL=webpack:///./src/script-3.js?");
+
+/***/ }),
+
+/***/ "./src/spinner.js":
+/*!************************!*\
+  !*** ./src/spinner.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports ={\r\n\r\n  createSpinner(){\r\n\r\n  },\r\n\r\n  removeSpinner(){\r\n\r\n  },\r\n\r\n  createSpinnerAt(){\r\n\r\n  }\r\n\r\n}\n\n//# sourceURL=webpack:///./src/spinner.js?");
 
 /***/ }),
 
@@ -153,13 +164,13 @@ eval("class Table {\r\n  constructor(data = [], tableColumsData, onCheckboxClick
 /***/ }),
 
 /***/ 0:
-/*!******************************************************************************************************!*\
-  !*** multi ./src/main.js ./src/booksApi.js ./src/table.js ./src/script-3.js ./src/formController.js ***!
-  \******************************************************************************************************/
+/*!***********************************************************************************************************************!*\
+  !*** multi ./src/main.js ./src/booksApi.js ./src/table.js ./src/spinner.js ./src/script-3.js ./src/formController.js ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/main.js */\"./src/main.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/booksApi.js */\"./src/booksApi.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/table.js */\"./src/table.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/script-3.js */\"./src/script-3.js\");\nmodule.exports = __webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/formController.js */\"./src/formController.js\");\n\n\n//# sourceURL=webpack:///multi_./src/main.js_./src/booksApi.js_./src/table.js_./src/script-3.js_./src/formController.js?");
+eval("__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/main.js */\"./src/main.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/booksApi.js */\"./src/booksApi.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/table.js */\"./src/table.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/spinner.js */\"./src/spinner.js\");\n__webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/script-3.js */\"./src/script-3.js\");\nmodule.exports = __webpack_require__(/*! E:\\Work and play_stockhouse\\Projects\\_2019\\Library/src/formController.js */\"./src/formController.js\");\n\n\n//# sourceURL=webpack:///multi_./src/main.js_./src/booksApi.js_./src/table.js_./src/spinner.js_./src/script-3.js_./src/formController.js?");
 
 /***/ })
 

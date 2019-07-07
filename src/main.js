@@ -30,7 +30,6 @@ function init(){
 init();
 
 
-
 function onFormSubmit(event){
   event.preventDefault();
   popup.onConfirm();
@@ -38,13 +37,11 @@ function onFormSubmit(event){
 }
 
 function onAddBook(e){
-  popup.setOnConfirm(onAddFormSubmit)
+  popup.setOnConfirmCallback(onAddFormSubmit)
   popup.open();
 }
 
- // ! maybe this callback should be 
 function onAddFormSubmit(){
-  console.log('another submit!!');
   api.addBook(formController.getFormValues()).then(
     (res)=>{
       popup.close();
@@ -58,13 +55,40 @@ function onAddFormSubmit(){
 
 
 function onEditBook(e){
-  console.log(e.target.attributes.bookId.value);
-  popup.setOnConfirm(onEditFormSubmit)
-  popup.open();
+  const id = e.target.attributes.bookId.value;
+
+  $publisherInput = document.getElementById('publisher').setAttribute('disabled','true');
+  $publisherInput = document.getElementById('quantity').setAttribute('disabled','true');
+
+  api.getBook(id).then(
+    (res)=>{
+      console.log(res);
+      popup.setOnConfirmCallback(onEditFormSubmit(id));
+      formController.populateForm(res);
+      popup.open();
+    }, 
+    (err)=>{
+      alert('Sorry, error occured. Please try again later', err);
+      popup.close();
+    })
 }
 
-function onEditFormSubmit(){
-  console.log('another edit submit!!');
+function onEditFormSubmit(id){
+
+  return function(){
+    console.log('another edit submit!!');
+    api.editBook(id, formController.getFormValues()).then(
+      (res)=>{
+        console.log(res);
+        init();
+        popup.close();
+      },
+      (err)=>{
+        alert('some error occured, please try again later');
+        popup.close();
+      })
+  }
+
 }
 
 function onPopupClose(){

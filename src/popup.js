@@ -15,7 +15,7 @@ class Popup {
     document.forms[0].reset();
   }
 
-  setOnConfirm(func){
+  setOnConfirmCallback(func){
     this.onConfirm = func;
   }
 

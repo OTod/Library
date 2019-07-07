@@ -88,6 +88,9 @@ function validatePutReq ( obj ) {
         price: Joi.number().greater(0),
         pagesCount: Joi.number().greater(0),
         publishingYear : Joi.number().greater(1000),
+
+        publisher: Joi.string().min(3),
+        quantity: Joi.number().greater(0),
     }
     return Joi.validate(obj, schema);
 }

@@ -7,11 +7,17 @@ function getFormValues(){
         formData[element.name] = element.value;
       }
     }
-  
+    console.log(formData);
     return formData;
 }
 
-function populateForm(){
+function populateForm(book){
+  for(let field in book){
+    let $element = document.getElementById(field);
+    if($element){
+      $element.value = book[field];
+    }
+  }
 
 }
 

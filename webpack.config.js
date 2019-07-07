@@ -2,6 +2,7 @@ const files = [
   'main.js',
   'booksApi.js',
   'table.js',
+  'spinner.js',
   'script-3.js',
   'formController.js',
 
