@@ -3,6 +3,7 @@ const files = [
   'booksApi.js',
   'table.js',
   'script-3.js',
+  'formController.js',
 
 ]
 .map(file => `${__dirname}/src/${file}`);

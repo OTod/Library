@@ -1,8 +1,8 @@
 class Popup {
   constructor(){
-
-    this.onCancel = onCancel;
-    this.onConfirm = onConfirm;
+    this.onConfirm = function(){
+      throw('No confirmation function provided');
+    }
     this.$popup = document.getElementById('popup');
   }
 
@@ -12,7 +12,13 @@ class Popup {
 
   close(){
     this.$popup.classList.replace('shown', 'hidden');
+    document.forms[0].reset();
   }
+
+  setOnConfirm(func){
+    this.onConfirm = func;
+  }
+
 }
 
 module.exports = new Popup();

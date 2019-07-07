@@ -42,26 +42,26 @@
 <div class="popup-wrapper hidden" id="popup">
 
   <div class="popup">
-    <form name="popupForm">
+    <form name="popupForm" id = "form">
       <div class="rows">
           <div class="row">
-              <input type="text" placeholder="Book Name" name="name">
-              <input type="text" placeholder="Book Author" name="author">
-              <input type="text" placeholder="Book Publisher" name="publisher">
-              <input type="text" placeholder="Book Quantity" name="quantity">
+              <input type="text" placeholder="Book Name" id="name" name="name" required>
+              <input type="text" placeholder="Book Author" id="author" name="author" required>
+              <input type="text" placeholder="Book Publisher" id="publisher" name="publisher">
+              <input type="text" placeholder="Book Quantity" id="quantity" name="quantity">
           </div>
           
           <div class="row">
-              <input type="text" placeholder="Book Price" name="price">
-              <input type="text" placeholder="Book Pages Count" name="pagesCount">
-              <input type="text" placeholder="Book Publishing Year" name="publishingYear">
+              <input type="text" placeholder="Book Price" id="price" name="price" required>
+              <input type="text" placeholder="Book Pages Count" id="pagesCount" name="pagesCount" >
+              <input type="text" placeholder="Book Publishing Year" id="publishingYear"  name="publishingYear">
           </div>
 
       </div>
 
 
       <div class="buttons-group">
-          <button type="button">Cancel</button>
+          <button id="cancelButton" type="button">Cancel</button>
           <button type="submit">Confirm</button>
       </div>
 

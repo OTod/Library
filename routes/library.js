@@ -18,6 +18,7 @@ router.get('/',(req,res) => {
 })
 
 router.post('/', (req,res) => {
+    console.log('request body: \n',req.body);
     const { error } = validatePostReq(req.body);
     if(error) return res.status(400).send(error.name + ': ' + error.details[0].message);
 

@@ -20,9 +20,14 @@ class LibraryAPI {
   }
 
   makeRequest(method, route, data ){
+    console.log(JSON.stringify(data));
     return new Promise((resolve, reject) => {
       let xhr = new XMLHttpRequest();
       xhr.open(method,this.baseURL+route, true);
+      if(method === 'POST' || method === 'PATCH'){
+        xhr.setRequestHeader('Content-Type','application/json');
+
+      }
       xhr.onload = () => {
         if(xhr.status >= 200 && xhr.status < 300 ) {
           resolve(JSON.parse(xhr.response)); 

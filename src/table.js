@@ -1,7 +1,15 @@
 class Table {
-  constructor(data = [], tableColumsData){
+  constructor(data = [], tableColumsData, onCheckboxClick, onEditBook){
     this.tableData = data;
 
+    this.onCheckboxClick = onCheckboxClick || function(){
+      throw('No checkbox click event handler provided');
+    }
+    
+    this.onEditBook = onEditBook || function(){
+      throw('No edit button click event handler provided');
+    }
+    
     this.tableColumnsOrderArray = tableColumsData || {
       checkbox: null,
       price: 'Price',
@@ -30,6 +38,7 @@ class Table {
   buildTable(){
 
     let $table = document.getElementById('table');
+    $table.innerHTML = '';
     let $headerRow = document.createElement('tr');
     for( let columnName in this.tableColumnsOrderArray){
       let $header = document.createElement('th');
@@ -49,13 +58,17 @@ class Table {
             let $checkbox = document.createElement('input');
             $checkbox.setAttribute('type', 'checkbox');
             $checkbox.setAttribute('bookId',element.id);
+            $checkbox.addEventListener('click',this.onCheckboxClick);
             $cell.appendChild($checkbox);
             break;
           case 'editButton': 
             let $editButton = document.createElement('button');
             $editButton.setAttribute('id', 'editButton');
+            $editButton.setAttribute('bookId', element.id);
             $editButton.innerText = 'Edit';
+            $editButton.addEventListener('click',this.onEditBook)
             $cell.appendChild($editButton);
+
             break;
           default: $cell.innerText = element[columnName];
         }
@@ -70,4 +83,4 @@ class Table {
   }
 }
 
-module.exports = new Table();
+module.exports = Table;
