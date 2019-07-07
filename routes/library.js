@@ -56,13 +56,18 @@ router.put('/:id', (req,res) => {
     res.send({...book, ...req.body});
 })
 
-router.delete('/:id', (req,res) => {
-    let book = lib.getBooks().find((item) => {
-        return item.id === parseInt (req.params.id);
-    });
-    if(!book) return res.status(400).send('Sorry, there are no such book in the library.');
+router.delete('/', (req,res) => {
+    const idsToDelete = req.body;
+    const idsValid = idsToDelete.filter(
+        id => lib.getBooks().some(
+            book => parseInt(book.id) === id)
+    )
 
-    lib.removeBook(book);
+    if(idsValid.length){
+        return res.status(400).send('Sorry, you have indicated not existing in library books.');
+    }
+
+    lib.removeBooks(idsToDelete);
     
     res.send(lib.getBooks());
 })

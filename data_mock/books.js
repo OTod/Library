@@ -21,6 +21,56 @@ class Library {
                 pagesCount: 194,
                 publishingYear: 1871,
             },
+            {
+                id: 3,
+                name: 'Through the looking glass',
+                author: 'Lewis Carrol',
+                publisher: 'Macmillan',
+                quantity: 1,
+                price: 100,
+                pagesCount: 194,
+                publishingYear: 1871,
+            },
+            {
+                id: 4,
+                name: 'Through the looking glass',
+                author: 'Lewis Carrol',
+                publisher: 'Macmillan',
+                quantity: 1,
+                price: 100,
+                pagesCount: 194,
+                publishingYear: 1871,
+            },
+            {
+                id: 5,
+                name: 'Through the looking glass',
+                author: 'Lewis Carrol',
+                publisher: 'Macmillan',
+                quantity: 1,
+                price: 100,
+                pagesCount: 194,
+                publishingYear: 1871,
+            },
+            {
+                id: 6,
+                name: 'Through the looking glass',
+                author: 'Lewis Carrol',
+                publisher: 'Macmillan',
+                quantity: 1,
+                price: 100,
+                pagesCount: 194,
+                publishingYear: 1871,
+            },
+            {
+                id: 7,
+                name: 'Through the looking glass',
+                author: 'Lewis Carrol',
+                publisher: 'Macmillan',
+                quantity: 1,
+                price: 100,
+                pagesCount: 194,
+                publishingYear: 1871,
+            },
         ];
 
     }
@@ -41,8 +91,10 @@ class Library {
         this.books[this.books.indexOf(book)] = updatedBook;
     }
 
-    removeBook(book) {
-        this.books.splice(this.books.indexOf(book), 1);
+    removeBooks(bookIds) {
+        bookIds.forEach(element => {
+            this.books = this.books.filter(book => book.id !== parseInt(element))
+        });
     }
 }
 

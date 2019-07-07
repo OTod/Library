@@ -18,6 +18,9 @@ $form.onsubmit = onFormSubmit;
 const $cancelFormButton = document.getElementById('cancelButton');
 $cancelFormButton.addEventListener('click',onPopupClose);
 
+const $removeSelectedButton = document.getElementById('removeSelectedBooks');
+$removeSelectedButton.addEventListener('click',onRemoveItems);
+
 //////////////////////////////////////////////////////
 function init(){
   api.fetchBooks().then(
@@ -59,8 +62,8 @@ function onAddFormSubmit(){
 function onEditBook(e){
   const id = e.target.attributes.bookId.value;
 
-  $publisherInput = document.getElementById('publisher').setAttribute('disabled','true');
-  $publisherInput = document.getElementById('quantity').setAttribute('disabled','true');
+  document.getElementById('publisher').setAttribute('disabled','true');
+  document.getElementById('quantity').setAttribute('disabled','true');
 
   api.getBook(id).then(
     (res)=>{
@@ -103,23 +106,40 @@ function onCheckboxClick(e){
   let itemIndex = selectedRows.findIndex(rowId => {
     return rowId === id;
   })
-  console.log(itemIndex);
-  console.log(selectedRows);
+
   if(itemIndex >= 0){
     console.log('found one');
     selectedRows.splice(itemIndex,1);
   } else {
     selectedRows.push(id);
   }
-  console.log(selectedRows);
+
+  initRemoveButton();
+
+}
+
+function initRemoveButton() {
   const $removeButton = document.getElementById('removeSelectedBooks');
-  if(selectedRows.length > 0){
+  if (selectedRows.length > 0) {
     $removeButton.removeAttribute('disabled');
     $removeButton.innerText = `Remove ${selectedRows.length} items`;
-  } else {
+  }
+  else {
     $removeButton.innerText = 'Remove selected';
     $removeButton.setAttribute('disabled', 'true');
   }
+}
 
+function onRemoveItems(){
+  api.deleteBooks(selectedRows).then(
+    (res)=>{
+      console.log(res);
+      init();
+      selectedRows = [];
+      initRemoveButton();
+    },
+    (err)=>{
+      alert('an error occured, try again later',err);
+    })
 }
 

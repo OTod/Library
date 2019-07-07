@@ -12,6 +12,10 @@ class Popup {
 
   close(){
     this.$popup.classList.replace('shown', 'hidden');
+
+    document.getElementById('publisher').removeAttribute('disabled');
+    document.getElementById('quantity').removeAttribute('disabled');
+
     document.forms[0].reset();
   }
 

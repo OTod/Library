@@ -15,8 +15,8 @@ class LibraryAPI {
     return this.makeRequest('PUT', `/${id}`, editedBook);
   }
 
-  deleteBook(id){
-    return this.makeRequest('DELETE', `/${id}`);
+  deleteBooks(idArr){
+    return this.makeRequest('DELETE', `/`,idArr);
   }
 
   addBook(newBook){
@@ -28,7 +28,7 @@ class LibraryAPI {
     return new Promise((resolve, reject) => {
       let xhr = new XMLHttpRequest();
       xhr.open(method,this.baseURL+route, true);
-      if(method === 'POST' || method === 'PUT'){
+      if(method === 'POST' || method === 'PUT' || method === 'DELETE'){
         xhr.setRequestHeader('Content-Type','application/json');
 
       }
