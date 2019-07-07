@@ -17,6 +17,15 @@ router.get('/',(req,res) => {
     res.send(lib.getBooks());
 })
 
+router.get('/:id',(req,res) => {
+    let book = lib.getBooks().find((item) => {
+        return item.id === parseInt (req.params.id);
+    });
+    if(!book) return res.status(400).send('Sorry, there are no such book in the library.');
+
+    res.send(book);
+})
+
 router.post('/', (req,res) => {
     console.log('request body: \n',req.body);
     const { error } = validatePostReq(req.body);
