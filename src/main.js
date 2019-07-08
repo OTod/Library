@@ -21,6 +21,9 @@ $cancelFormButton.addEventListener('click',onPopupClose);
 const $removeSelectedButton = document.getElementById('removeSelectedBooks');
 $removeSelectedButton.addEventListener('click',onRemoveItems);
 
+const $filterInput = document.getElementById('filterInput');
+$filterInput.addEventListener('input', onFilteringChange);
+
 //////////////////////////////////////////////////////
 function init(){
   api.fetchBooks().then(
@@ -141,5 +144,15 @@ function onRemoveItems(){
     (err)=>{
       alert('an error occured, try again later',err);
     })
+}
+
+function onFilteringChange(e){
+  console.log(e);
+  tableApi.filterData(e.target.value);
+  setTimeout(()=>{
+    console.log('filering!');
+    tableApi.buildTable();
+  },700)
+
 }
 

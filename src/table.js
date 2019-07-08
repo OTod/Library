@@ -1,6 +1,7 @@
 class Table {
   constructor(data = [], tableColumsData, onCheckboxClick, onEditBook){
     this.tableData = data;
+    this.source = data;
 
     this.onCheckboxClick = onCheckboxClick || function(){
       throw('No checkbox click event handler provided');
@@ -26,14 +27,25 @@ class Table {
 
   set data(data){
     this.tableData = data;
+    this.source = data;
   }
 
   sortData(parameter){
 // ! not implemented yet
   }
 
-  filterData(parameter){
-// ! not implemented yet
+  filterData(value){
+    this.tableData = this.source.filter(
+      (book)=>{
+        let { name, author } = book;
+        console.log(name, author);
+        console.log(value);
+        return name.includes(value) || author.includes(value);
+      })
+      console.log(this.tableData);
+    if(!value){
+      this.tableData = this.source;
+    }
   }
 
   buildTable(){
