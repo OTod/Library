@@ -19,6 +19,7 @@ class Table {
       quantity: 'Quantity',
       pagesCount: 'Pages Count',
       publishingYear: 'Publishing Year',
+      genre: 'Genre',
       editButton: null
     }
   }

@@ -74,14 +74,16 @@ router.delete('/', (req,res) => {
 
 
 function validatePostReq ( obj ) {
+
     const schema = {
         name: Joi.string().min(3).required(),
         author: Joi.string().min(3).required(),
         publisher: Joi.string().min(3).required(),
         quantity: Joi.number().greater(0).required(),
         price: Joi.number().greater(0).required(),
-        pagesCount: Joi.number().greater(0).required(),
-        publishingYear : Joi.number().greater(1000).required(),
+        pagesCount: Joi.optional(),
+        publishingYear : Joi.optional(),
+        genre: Joi.optional(),
     }
     return Joi.validate(obj, schema);
 }
@@ -91,8 +93,9 @@ function validatePutReq ( obj ) {
         name: Joi.string().min(3),
         author: Joi.string().min(3),
         price: Joi.number().greater(0),
-        pagesCount: Joi.number().greater(0),
-        publishingYear : Joi.number().greater(1000),
+        pagesCount: Joi.optional(),
+        publishingYear : Joi.optional(),
+        genre: Joi.optional(),
 
         publisher: Joi.string().min(3),
         quantity: Joi.number().greater(0),

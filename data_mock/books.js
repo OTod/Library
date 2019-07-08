@@ -10,6 +10,7 @@ class Library {
                 price: 100,
                 pagesCount: 217,
                 publishingYear: 1865,
+                genre: 'fiction'
             },
             {
                 id: 2,
@@ -20,57 +21,9 @@ class Library {
                 price: 100,
                 pagesCount: 194,
                 publishingYear: 1871,
+                genre: 'fiction'
             },
-            {
-                id: 3,
-                name: 'Through the looking glass',
-                author: 'Lewis Carrol',
-                publisher: 'Macmillan',
-                quantity: 1,
-                price: 100,
-                pagesCount: 194,
-                publishingYear: 1871,
-            },
-            {
-                id: 4,
-                name: 'Through the looking glass',
-                author: 'Lewis Carrol',
-                publisher: 'Macmillan',
-                quantity: 1,
-                price: 100,
-                pagesCount: 194,
-                publishingYear: 1871,
-            },
-            {
-                id: 5,
-                name: 'Through the looking glass',
-                author: 'Lewis Carrol',
-                publisher: 'Macmillan',
-                quantity: 1,
-                price: 100,
-                pagesCount: 194,
-                publishingYear: 1871,
-            },
-            {
-                id: 6,
-                name: 'Through the looking glass',
-                author: 'Lewis Carrol',
-                publisher: 'Macmillan',
-                quantity: 1,
-                price: 100,
-                pagesCount: 194,
-                publishingYear: 1871,
-            },
-            {
-                id: 7,
-                name: 'Through the looking glass',
-                author: 'Lewis Carrol',
-                publisher: 'Macmillan',
-                quantity: 1,
-                price: 100,
-                pagesCount: 194,
-                publishingYear: 1871,
-            },
+            
         ];
 
     }
