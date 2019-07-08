@@ -63,11 +63,8 @@ class Table {
     this.tableData = this.source.filter(
       (book)=>{
         let { name, author } = book;
-        console.log(name, author);
-        console.log(value);
-        return name.includes(value) || author.includes(value);
+        return name.toLowerCase().includes(value.toLowerCase()) || author.toLowerCase().includes(value.toLowerCase());
       })
-      console.log(this.tableData);
     if(!value){
       this.tableData = this.source;
     }
