@@ -1,82 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>TestLibrary</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TestLibrary</title>
 
-  <link rel="stylesheet" href="./dist/main.css">
+    <link rel="stylesheet" href="./dist/main.css" />
+  </head>
+  <body>
+    <div class="main__container">
+      <div class="main__buttons-container">
+        <div class="filtering-container">
+          <input
+            type="text"
+            placeholder="type name or author"
+            id="filterInput"
+          />
+        </div>
 
-</head>
-<body>
-
-
-<div class="main__container">
-
-  <div class="main__buttons-container">
-
-<div class="filtering-container">
-    <input type="text" placeholder="type name or author" id="filterInput">
-</div>
-
-<button id="addBookButton">
-  ADD A BOOK
-</button>
-<button id="removeSelectedBooks" disabled>
-  Remove selected
-</button>
-
-  </div>
-  <div class="main__table-container">
-    <table id="table">
-
-    </table>
-
-  </div>
-
-
-</div>
-
-<div class="popup-wrapper hidden" id="popup">
-
-  <div class="popup">
-    <form name="popupForm" id = "form">
-      <div class="rows">
-          <div class="row">
-              <input type="text" placeholder="Name" id="name" name="name" required pattern="[\D]{3,}" title="Minimum 3 symbols. Letters only.">
-              <input type="text" placeholder="Author" id="author" name="author" required pattern="[\D]{3,}" title="Minimum 3 symbols. Letters only.">
-              <input type="text" placeholder="Publisher" id="publisher" name="publisher" required pattern="[\D]{3,}" title="Minimum 3 symbols. Letters only.">
-              <input type="text" placeholder="Genre" id="genre" name="genre" pattern="[\D]{3,}" title="Minimum 3 symbols. Letters only.">
-
-          </div>
-          
-          <div class="row">
-              <input type="number" placeholder="Pages Count" id="pagesCount" name="pagesCount" min="1" title="Amount of pages can not be less then 1.">
-              <input type="number" placeholder="Quantity" id="quantity" required name="quantity" min="0" title="Quantity can not be less then 0.">
-              <input type="number" placeholder="Price" id="price" name="price" required min="1" title="Price should be more then 0.">
-              <input type="text" placeholder="Publishing Year" id="publishingYear"  name="publishingYear" pattern="[1][9]\d{2}" title="Later then 1900. And, no more then 4 digits.">
-          </div>
-
+        <button id="addBookButton">
+          ADD A BOOK
+        </button>
+        <button id="removeSelectedBooks" disabled>
+          Remove selected
+        </button>
       </div>
-
-
-      <div class="buttons-group">
-          <button id="cancelButton" type="button">Cancel</button>
-          <button type="submit">Confirm</button>
+      <div class="main__table-container">
+        <table id="table"></table>
       </div>
+    </div>
 
+    <div class="popup-wrapper hidden" id="popup">
+      <div class="popup">
+        <form name="popupForm" id="form">
+          <div class="rows">
+            <div class="row">
+              <input
+                type="text"
+                placeholder="Name"
+                id="name"
+                name="name"
+                required
+                pattern="[\D]{3,}"
+                title="Minimum 3 symbols. Letters only."
+              />
+              <input
+                type="text"
+                placeholder="Author"
+                id="author"
+                name="author"
+                required
+                pattern="[\D]{3,}"
+                title="Minimum 3 symbols. Letters only."
+              />
+              <input
+                type="text"
+                placeholder="Publisher"
+                id="publisher"
+                name="publisher"
+                required
+                pattern="[\D]{3,}"
+                title="Minimum 3 symbols. Letters only."
+              />
+              <input
+                type="text"
+                placeholder="Genre"
+                id="genre"
+                name="genre"
+                pattern="[\D]{3,}"
+                title="Minimum 3 symbols. Letters only."
+              />
+            </div>
 
-    </form>
-    
+            <div class="row">
+              <input
+                type="number"
+                placeholder="Pages Count"
+                id="pagesCount"
+                name="pagesCount"
+                min="1"
+                title="Amount of pages can not be less then 1."
+              />
+              <input
+                type="number"
+                placeholder="Quantity"
+                id="quantity"
+                required
+                name="quantity"
+                min="0"
+                title="Quantity can not be less then 0."
+              />
+              <input
+                type="number"
+                placeholder="Price"
+                id="price"
+                name="price"
+                required
+                min="1"
+                title="Price should be more then 0."
+              />
+              <input
+                type="text"
+                placeholder="Publishing Year"
+                id="publishingYear"
+                name="publishingYear"
+                pattern="[1][9]\d{2}"
+                title="Later then 1900. And, no more then 4 digits."
+              />
+            </div>
+          </div>
 
-  </div>
+          <div class="buttons-group">
+            <button id="cancelButton" type="button">Cancel</button>
+            <button type="submit">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-</div>
-
-
-
-  <script src="./dist/main.js"></script>
-</body>
+    <script src="./dist/main.js"></script>
+  </body>
 </html>
-
