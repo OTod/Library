@@ -37,7 +37,6 @@ class Table {
     const {sortParam} = e.target;
 
     this.tableData = this.tableData.sort(function (a, b) {
-      console.log( 'a and b'. a, b);
       if (a[sortParam] > b[sortParam]) {
         return 1;
       }
@@ -48,6 +47,16 @@ class Table {
     })
 
     this.buildTable();
+
+    [...document.getElementsByTagName('th')]
+    .forEach((node)=>{
+      if( node.sortParam === sortParam){
+        node.classList.add('highlighted');
+      } else {
+        node.classList.remove('highlighted');
+      }
+    })
+
   }
 
   filterData(value){
