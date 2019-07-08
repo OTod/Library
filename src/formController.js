@@ -7,7 +7,6 @@ function getFormValues(){
         formData[element.name] = element.value;
       }
     }
-    console.log(formData);
     return formData;
 }
 
@@ -20,6 +19,5 @@ function populateForm(book){
   }
 
 }
-
 
 module.exports = { getFormValues, populateForm }

@@ -7,8 +7,6 @@ const tableApi = new Table(null,null,onCheckboxClick, onEditBook); // ! too many
 
 var selectedRows = [];
 
-// event handlers adding
-
 const $addBookButton = document.getElementById('addBookButton');
 $addBookButton.addEventListener('click',onAddBook);
 
@@ -24,7 +22,6 @@ $removeSelectedButton.addEventListener('click',onRemoveItems);
 const $filterInput = document.getElementById('filterInput');
 $filterInput.addEventListener('input', onFilteringChange);
 
-//////////////////////////////////////////////////////
 function init(){
   api.fetchBooks().then(
     (books)=>{
@@ -32,7 +29,7 @@ function init(){
       tableApi.buildTable();
     },
     (error)=>{
-      alert('sorry, an error occurerd', error); // !change to displayed message instead a table
+      console.log('sorry, an error occurerd', error); // !change to displayed message instead a table
     })
 }
 init();
@@ -56,7 +53,7 @@ function onAddBookFormSubmit(){
       init();
     }, 
     (err)=>{
-      alert('some error occured!', err);
+      console.log('some error occured!', err);
       popup.close();
     })
 }
@@ -70,13 +67,12 @@ function onEditBook(e){
 
   api.getBook(id).then(
     (res)=>{
-      console.log(res);
       popup.setOnConfirmCallback(onEditFormSubmit(id));
       formController.populateForm(res);
       popup.open();
     }, 
     (err)=>{
-      alert('Sorry, error occured. Please try again later', err);
+      console.log('Sorry, error occured. Please try again later', err);
       popup.close();
     })
 }
@@ -84,15 +80,13 @@ function onEditBook(e){
 function onEditFormSubmit(id){
 
   return function(){
-    console.log('another edit submit!!');
     api.editBook(id, formController.getFormValues()).then(
       (res)=>{
-        console.log(res);
         init();
         popup.close();
       },
       (err)=>{
-        alert('some error occured, please try again later');
+        console.log('some error occured, please try again later');
         popup.close();
       })
   }
@@ -111,7 +105,6 @@ function onCheckboxClick(e){
   })
 
   if(itemIndex >= 0){
-    console.log('found one');
     selectedRows.splice(itemIndex,1);
   } else {
     selectedRows.push(id);
@@ -136,13 +129,12 @@ function initRemoveButton() {
 function onRemoveItems(){
   api.deleteBooks(selectedRows).then(
     (res)=>{
-      console.log(res);
       init();
       selectedRows = [];
       initRemoveButton();
     },
     (err)=>{
-      alert('an error occured, try again later',err);
+      console.log('an error occured, try again later',err);
     })
 }
 
