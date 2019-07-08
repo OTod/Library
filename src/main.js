@@ -45,11 +45,11 @@ function onFormSubmit(event){
 }
 
 function onAddBook(e){
-  popup.setOnConfirmCallback(onAddFormSubmit)
+  popup.setOnConfirmCallback(onAddBookFormSubmit)
   popup.open();
 }
 
-function onAddFormSubmit(){
+function onAddBookFormSubmit(){
   api.addBook(formController.getFormValues()).then(
     (res)=>{
       popup.close();
@@ -147,12 +147,9 @@ function onRemoveItems(){
 }
 
 function onFilteringChange(e){
-  console.log(e);
   tableApi.filterData(e.target.value);
   setTimeout(()=>{
-    console.log('filering!');
     tableApi.buildTable();
   },700)
-
 }
 

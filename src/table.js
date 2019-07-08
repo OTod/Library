@@ -23,6 +23,8 @@ class Table {
       genre: 'Genre',
       editButton: null
     }
+
+    this.sortData = this.sortData.bind(this);
   }
 
   set data(data){
@@ -30,8 +32,22 @@ class Table {
     this.source = data;
   }
 
-  sortData(parameter){
-// ! not implemented yet
+  sortData(e){
+
+    const {sortParam} = e.target;
+
+    this.tableData = this.tableData.sort(function (a, b) {
+      console.log( 'a and b'. a, b);
+      if (a[sortParam] > b[sortParam]) {
+        return 1;
+      }
+      if (a[sortParam] < b[sortParam]) {
+        return -1;
+      }
+      return 0;
+    })
+
+    this.buildTable();
   }
 
   filterData(value){
@@ -56,6 +72,8 @@ class Table {
     for( let columnName in this.tableColumnsOrderArray){
       let $header = document.createElement('th');
       $header.innerText = this.tableColumnsOrderArray[columnName]
+      $header.onclick = this.sortData;
+      $header.sortParam = columnName;
       $headerRow.appendChild($header);
     }
     $table.appendChild($headerRow);
