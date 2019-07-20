@@ -23,6 +23,28 @@ class Library {
                 publishingYear: 1871,
                 genre: 'fiction'
             },
+            {
+                id: 3,
+                name: 'The Lion, The Witch and the Wardrobe',
+                author: 'Clive S Lewis',
+                publisher: 'Geoffrey Bles',
+                quantity: 1,
+                price: 100,
+                pagesCount: 257,
+                publishingYear: 1950,
+                genre: 'fiction'
+            },
+            {
+                id: 4,
+                name: 'Prince Caspian',
+                author: 'Clive S Lewis',
+                publisher: 'Geoffrey Bles',
+                quantity: 1,
+                price: 100,
+                pagesCount: 194,
+                publishingYear: 1951,
+                genre: 'fiction'
+            },
             
         ];
 

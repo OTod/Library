@@ -7,6 +7,10 @@ class LibraryAPI {
     return this.makeRequest("GET", "");
   }
 
+  fetchBooksByPage(pageNum, filterParam){
+    return this.makeRequest("GET", `/pages?pageNum=${pageNum}&filterParam=${filterParam}`);
+  }
+
   getBook(id) {
     return this.makeRequest("GET", `/${id}`);
   }

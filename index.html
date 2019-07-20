@@ -27,6 +27,8 @@
         </button>
       </div>
       <div class="main__table-container">
+        <div id="pagination">
+        </div>
         <table id="table"></table>
       </div>
     </div>
@@ -88,8 +90,8 @@
                 id="quantity"
                 required
                 name="quantity"
-                min="0"
-                title="Quantity can not be less then 0."
+                min="1"
+                title="Quantity can not be less then 1."
               />
               <input
                 type="number"
@@ -98,7 +100,7 @@
                 name="price"
                 required
                 min="1"
-                title="Price should be more then 0."
+                title="Price should be more then 1."
               />
               <input
                 type="text"

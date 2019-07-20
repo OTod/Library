@@ -2,10 +2,13 @@ const api = require("./booksApi");
 const Table = require("./table");
 const popup = require("./popup");
 const formController = require("./formController");
+const pagination = require("./pagination");
 
 const tableApi = new Table(null, null, onCheckboxClick, onEditBook);
 
 var selectedRows = [];
+var selectedPage = 1;
+var filterParam = '';
 
 const $addBookButton = document.getElementById("addBookButton");
 $addBookButton.addEventListener("click", onAddBook);
@@ -23,9 +26,10 @@ const $filterInput = document.getElementById("filterInput");
 $filterInput.addEventListener("input", onFilteringChange);
 
 function init() {
-  api.fetchBooks().then(
-    books => {
-      tableApi.data = books;
+  api.fetchBooksByPage( selectedPage, filterParam ).then(
+    booksData => {
+      pagination.createPagination( booksData.pagesAmount, booksData.pageNum, onPaginationClick );
+      tableApi.data = booksData.requiredBooks;
       tableApi.buildTable();
     },
     error => {
@@ -33,6 +37,7 @@ function init() {
     }
   );
 }
+
 init();
 
 function onFormSubmit(event) {
@@ -112,6 +117,11 @@ function onCheckboxClick(e) {
   initRemoveButton();
 }
 
+function onPaginationClick (e){
+  selectedPage = e.target.value;
+  init();
+}
+
 function initRemoveButton() {
   const $removeButton = document.getElementById("removeSelectedBooks");
   if (selectedRows.length > 0) {
@@ -137,8 +147,10 @@ function onRemoveItems() {
 }
 
 function onFilteringChange(e) {
-  tableApi.filterData(e.target.value);
+  // tableApi.filterData(e.target.value);
+  filterParam = e.target.value;
   setTimeout(() => {
-    tableApi.buildTable();
+    // tableApi.buildTable();
+    init();
   }, 700);
 }

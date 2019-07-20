@@ -60,19 +60,6 @@ class Table {
     });
   }
 
-  filterData(value) {
-    this.tableData = this.source.filter(book => {
-      let { name, author } = book;
-      return (
-        name.toLowerCase().includes(value.toLowerCase()) ||
-        author.toLowerCase().includes(value.toLowerCase())
-      );
-    });
-    if (!value) {
-      this.tableData = this.source;
-    }
-  }
-
   buildTable() {
     let $table = document.getElementById("table");
     $table.innerHTML = "";

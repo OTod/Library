@@ -146,3 +146,19 @@ input {
 .buttons-group > * {
   margin-left: 15px;
 }
+
+
+/* pagination */
+#pagination * {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.pagination-number {
+  background-color: grey;
+}
+
+.pagination-number-selected {
+  background-color:green;
+}
+

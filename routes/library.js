@@ -6,6 +6,8 @@ const Library = require("../data_mock/books");
 
 const lib = new Library();
 
+const itemsPerPage = 3;
+
 router.use((req, res, next) => {
   res.append("Access-Control-Allow-Origin", ["*"]);
   res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
@@ -15,6 +17,15 @@ router.use((req, res, next) => {
 
 router.get("/", (req, res) => {
   res.send(lib.getBooks());
+});
+
+router.get("/pages", (req, res) => {
+  const { pageNum } = req.query;
+  const {filterParam} = req.query;
+  const books = booksFilter(filterParam, lib.getBooks());
+  const pagesAmount = Math.ceil( books.length / itemsPerPage );
+  const requiredBooks = books.slice( ( itemsPerPage * ( pageNum - 1 ) ), itemsPerPage + ( itemsPerPage * ( pageNum - 1 ) ) );
+  res.send( { requiredBooks, pagesAmount, pageNum } );
 });
 
 router.get("/:id", (req, res) => {
@@ -43,6 +54,7 @@ router.post("/", (req, res) => {
 
   res.send(lib.getBooks());
 });
+
 
 router.put("/:id", (req, res) => {
   let book = lib.getBooks().find(item => {
@@ -113,6 +125,19 @@ function validatePutReq(obj) {
     quantity: Joi.number().greater(0)
   };
   return Joi.validate(obj, schema);
+}
+
+function booksFilter(filterParam, input) {
+  if (!filterParam) {
+    return input;
+  }
+  return input.filter(book => {
+    let { name, author } = book;
+    return (
+      name.toLowerCase().includes(filterParam.toLowerCase()) ||
+      author.toLowerCase().includes(filterParam.toLowerCase())
+    );
+  });
 }
 
 module.exports = router;
